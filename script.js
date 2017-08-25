@@ -2,7 +2,7 @@ var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
 //var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
 
-var colors = [ 'aqua' , 'azure' , 'beige', 'bisque', 'black', 'blue', 'brown', 'chocolate', 'coral', 'crimson', 'cyan', 'fuchsia', 'ghostwhite', 'gold', 'goldenrod', 'gray', 'green', 'indigo', 'ivory', 'khaki', 'lavender', 'lime', 'linen', 'magenta', 'maroon', 'moccasin', 'navy', 'olive', 'orange', 'orchid', 'peru', 'pink', 'plum', 'purple', 'red', 'salmon', 'sienna', 'silver', 'snow', 'tan', 'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'white', 'yellow'];
+//var colors = [ 'aqua' , 'azure' , 'beige', 'bisque', 'black', 'blue', 'brown', 'chocolate', 'coral', 'crimson', 'cyan', 'fuchsia', 'ghostwhite', 'gold', 'goldenrod', 'gray', 'green', 'indigo', 'ivory', 'khaki', 'lavender', 'lime', 'linen', 'magenta', 'maroon', 'moccasin', 'navy', 'olive', 'orange', 'orchid', 'peru', 'pink', 'plum', 'purple', 'red', 'salmon', 'sienna', 'silver', 'snow', 'tan', 'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'white', 'yellow'];
 //var grammar = '#JSGF V1.0; grammar colors; public <color> = ' + colors.join(' | ') + ' ;'
 
 var recognition = new SpeechRecognition();
@@ -27,7 +27,9 @@ var diagnostic = document.querySelector('.output');
 
 document.body.onclick = function() {
   recognition.start();
-  console.log('Ready to receive a color command.');
+  diagnostic.innerHTML += 'Ready to receive a color command.<br/>';
+  scrollToBottom();
+  //console.log('Ready to receive a color command.');
 }
 
 recognition.onresult = function(event) {
@@ -43,9 +45,11 @@ recognition.onresult = function(event) {
   var last = event.results.length - 1;
   var transcript = event.results[last][0].transcript;
 
-  diagnostic.textContent = 'Result received: ' + transcript + '.';
+  diagnostic.innerHTML += 'Result received: ' + transcript + '.<br/>';
+  diagnostic.innerHTML += 'Confidence: ' + event.results[0][0].confidence + '<br/><br/>';
+  scrollToBottom();
   // bg.style.backgroundColor = color;
-  console.log('Confidence: ' + event.results[0][0].confidence);
+  //console.log('Confidence: ' + event.results[0][0].confidence);
 }
 
 recognition.onspeechend = function() {
@@ -53,9 +57,16 @@ recognition.onspeechend = function() {
 }
 
 recognition.onnomatch = function(event) {
-  diagnostic.textContent = "I didn't recognise that color.";
+  diagnostic.innerHTML += "I didn't recognise that color. <br/><br/>" ;
+  scrollToBottom();
 }
 
 recognition.onerror = function(event) {
-  diagnostic.textContent = 'Error occurred in recognition: ' + event.error;
+  diagnostic.innerHTML += 'Error occurred in recognition: ' + event.error + '<br/><br/>';
+  scrollToBottom();
+}
+
+function scrollToBottom = function() {
+  var elem = document.querySelector('body');
+  elem.scrollTop = elem.scrollHeight;
 }
