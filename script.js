@@ -48,13 +48,14 @@ recognition.onresult = function(event) {
   diagnostic.innerHTML += 'Result received: ' + transcript + '.<br/>';
   diagnostic.innerHTML += 'Confidence: ' + event.results[0][0].confidence + '<br/><br/>';
   scrollToBottom();
+  speak(transcript);
   // bg.style.backgroundColor = color;
   //console.log('Confidence: ' + event.results[0][0].confidence);
 }
 
 recognition.onspeechend = function() {
   recognition.stop();
-  diagnostic.innerHTML += "I have stopped listening now...";
+  diagnostic.innerHTML += "I have stopped listening now...<br/><br/>";
 }
 
 recognition.onnomatch = function(event) {
@@ -70,4 +71,50 @@ recognition.onerror = function(event) {
 function scrollToBottom() {
   var elem = document.querySelector('body');
   elem.scrollTop = elem.scrollHeight;
+}
+
+<!-------------------- --!>
+
+var synth = window.speechSynthesis;
+var voiceSelect = document.querySelector('.voice');
+
+function speak(msg){
+  if(msg !== ''){
+    var utterThis = new SpeechSynthesisUtterance(msg);
+    var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+    for(i = 0; i < voices.length ; i++) {
+      if(voices[i].name === selectedOption) {
+        utterThis.voice = voices[i];
+      }
+    }
+    utterThis.pitch = pitch.value;
+    utterThis.rate = rate.value;
+    synth.speak(utterThis);
+  }
+}
+
+var voices = [];
+
+function populateVoiceList() {
+  voices = synth.getVoices();
+  var selectedIndex = voiceSelect.selectedIndex < 0 ? 0 : voiceSelect.selectedIndex;
+  voiceSelect.innerHTML = '';
+  for(i = 0; i < voices.length ; i++) {
+    var option = document.createElement('option');
+    option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+    
+    if(voices[i].default) {
+      option.textContent += ' -- DEFAULT';
+    }
+
+    option.setAttribute('data-lang', voices[i].lang);
+    option.setAttribute('data-name', voices[i].name);
+    voiceSelect.appendChild(option);
+  }
+  voiceSelect.selectedIndex = selectedIndex;
+}
+
+populateVoiceList();
+if (speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = populateVoiceList;
 }

@@ -8,6 +8,8 @@ html {
 
 body {
   height: inherit;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 h1, p {
@@ -19,9 +21,6 @@ h1, p {
 div {
   overflow: auto;
   position: relative;
-  bottom: 0px;
-  right: 0;
-  left: 0;
   background-color: rgba(255,255,255,0.2);
 }
 
@@ -32,3 +31,39 @@ ul {
 .hints span {
   text-shadow: 0px 0px 6px rgba(255,255,255,0.7);
 }
+
+
+select {
+  width: 83%;
+}
+
+form > div {
+  width: 81%;
+}
+
+.txt, form > div {
+  margin-bottom: 10px;
+  overflow: auto;
+}
+
+.clearfix {
+  clear: both;
+}
+
+label {
+  float: left;
+  width: 10%;
+  line-height: 1.5;
+}
+
+.rate-value, .pitch-value {
+  float: right;
+  width: 5%;
+  line-height: 1.5;
+}
+
+#rate, #pitch {
+  float: right;
+  width: 81%;
+}
+
