@@ -66,7 +66,7 @@ recognition.onerror = function(event) {
   scrollToBottom();
 }
 
-function scrollToBottom = function() {
+function scrollToBottom() {
   var elem = document.querySelector('body');
   elem.scrollTop = elem.scrollHeight;
 }
