@@ -27,7 +27,7 @@ var diagnostic = document.querySelector('.output');
 
 document.body.onclick = function() {
   recognition.start();
-  diagnostic.innerHTML += 'Ready to receive a color command.<br/>';
+  diagnostic.innerHTML += 'Yeah, I am listening :).<br/>';
   scrollToBottom();
   //console.log('Ready to receive a color command.');
 }
@@ -54,10 +54,11 @@ recognition.onresult = function(event) {
 
 recognition.onspeechend = function() {
   recognition.stop();
+  diagnostic.innerHTML += "I have stopped listening now...";
 }
 
 recognition.onnomatch = function(event) {
-  diagnostic.innerHTML += "I didn't recognise that color. <br/><br/>" ;
+  diagnostic.innerHTML += "I didn't recognise what you said. <br/><br/>" ;
   scrollToBottom();
 }
 
