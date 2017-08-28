@@ -1,3 +1,5 @@
+var testBody = document.querySelector('body');
+testBody.innerHTML += "test content to test javascript";
 var synth = window.speechSynthesis;
 var voiceSelect = document.querySelector('.voice');
 populateVoiceList();
