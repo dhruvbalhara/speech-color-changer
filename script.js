@@ -1,3 +1,6 @@
+var voiceSelect = document.querySelector('.voice');
+populateVoiceList();
+
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
 //var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
@@ -114,7 +117,6 @@ function populateVoiceList() {
   voiceSelect.selectedIndex = selectedIndex;
 }
 
-populateVoiceList();
 if (speechSynthesis.onvoiceschanged !== undefined) {
   speechSynthesis.onvoiceschanged = populateVoiceList;
 }
