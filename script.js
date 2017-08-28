@@ -1,3 +1,4 @@
+var synth = window.speechSynthesis;
 var voiceSelect = document.querySelector('.voice');
 populateVoiceList();
 
